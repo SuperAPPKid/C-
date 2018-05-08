@@ -16,12 +16,17 @@ namespace Interface {
     abstract class Animal {
         public string nickName;
         public abstract void shout();
-        public string name { get; protected set; }
+        public abstract string name { get; }
         public void eat() {
             Console.WriteLine($"{this.name} is eating...");
         } 
     }
     class Turtle : Animal, ISwim {
+        public override string name {
+            get {
+                return "Turtle";
+            }
+        }
         public override void shout() {
             Console.WriteLine("mmmmm");
         }
@@ -36,13 +41,12 @@ namespace Interface {
             Console.WriteLine($"{this.name} is swimming in {this.swimSpeed}km/hr...");
         }
         public Turtle(string nickName) {
-            this.name = "Turtle";
             this.nickName = nickName;
             Console.WriteLine($"{nickName} born...");
         }
     }
 
-    class Dock : Animal, IFly,ISwim {
+    class Duck : Animal, IFly,ISwim {
         public override void shout() {
             Console.WriteLine("dadada");
         }
@@ -59,6 +63,12 @@ namespace Interface {
             }
         }
 
+        public override string name {
+            get {
+                return "Duck";
+            }
+        }
+
         public void fly() {
             Console.WriteLine($"{this.name} is flying in {this.flySpeed}km/hr...");
         }
@@ -66,8 +76,7 @@ namespace Interface {
         public void swim() {
             Console.WriteLine($"{this.name} is swimming in {this.swimSpeed}km/hr...");
         }
-        public Dock(string nickName) {
-            this.name = "Dock";
+        public Duck(string nickName) {
             this.nickName = nickName;
             Console.WriteLine($"{nickName} born...");
         }
@@ -76,7 +85,7 @@ namespace Interface {
     class Program {
         static void Main(string[] args) {
             var myTurtle = new Turtle(nickName:"Good Turtle");
-            var myDock = new Dock(nickName: "Bad Dock");
+            var myDock = new Duck(nickName: "Bad Duck");
 
             myDock.swim();
             myTurtle.swim();
