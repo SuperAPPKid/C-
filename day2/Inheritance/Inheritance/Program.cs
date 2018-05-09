@@ -27,7 +27,7 @@ namespace Inheritance {
                 base.old = value;
             }
         }
-        override public void saySomething() {
+        new public void saySomething() {
             Console.WriteLine("I'm Son.");
         }
         public Son():this(80) {
@@ -41,13 +41,18 @@ namespace Inheritance {
     class Program {
         static void Main(string[] args) {
             var son = new Son(18);
+
             var oldSon = new Son();
+
             var parant = (Parant)son;
+
             Console.WriteLine($"son:{son.old}");
             Console.WriteLine($"oldSon:{oldSon.old}");
             son.parentOld = 40;
             Console.WriteLine($"son's parant:{son.parentOld}");
             Console.WriteLine($"parant:{parant.old}");
+
+
             son.saySomething();
             parant.saySomething();
             Console.ReadKey();

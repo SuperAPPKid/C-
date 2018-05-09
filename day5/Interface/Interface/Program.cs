@@ -7,57 +7,33 @@ using System.Threading.Tasks;
 namespace Interface {
     interface IFly {
         void fly();
-        double flySpeed { get;}
+        double speed { get;}
     }
     interface ISwim {
         void swim();
-        double swimSpeed { get; }
+        double speed { get; }
     }
     abstract class Animal {
         public string nickName;
         public abstract void shout();
         public abstract string name { get; }
         public void eat() {
-            Console.WriteLine($"{this.name} is eating...");
+            Console.WriteLine($"{this.nickName} is eating...");
         } 
     }
-    class Turtle : Animal, ISwim {
-        public override string name {
-            get {
-                return "Turtle";
-            }
-        }
-        public override void shout() {
-            Console.WriteLine("mmmmm");
-        }
 
-        public double swimSpeed {
-            get {
-                return 10;
-            }
-        }
-
-        public void swim() {
-            Console.WriteLine($"{this.name} is swimming in {this.swimSpeed}km/hr...");
-        }
-        public Turtle(string nickName) {
-            this.nickName = nickName;
-            Console.WriteLine($"{nickName} born...");
-        }
-    }
-
-    class Duck : Animal, IFly,ISwim {
+    class Duck : Animal, IFly, ISwim {
         public override void shout() {
             Console.WriteLine("dadada");
         }
 
-        public double flySpeed {
+        double IFly.speed {
             get {
                 return 80;
             }
         }
 
-        public double swimSpeed {
+        double ISwim.speed {
             get {
                 return 20;
             }
@@ -70,11 +46,11 @@ namespace Interface {
         }
 
         public void fly() {
-            Console.WriteLine($"{this.name} is flying in {this.flySpeed}km/hr...");
+            Console.WriteLine($"{this.nickName} is flying in {((IFly)this).speed}km/hr...");
         }
 
         public void swim() {
-            Console.WriteLine($"{this.name} is swimming in {this.swimSpeed}km/hr...");
+            Console.WriteLine($"{this.nickName} is swimming in {((ISwim)this).speed}km/hr...");
         }
         public Duck(string nickName) {
             this.nickName = nickName;
@@ -82,21 +58,65 @@ namespace Interface {
         }
     }
 
+    class Turtle : Animal, ISwim {
+        public override string name {
+            get {
+                return "Turtle";
+            }
+        }
+        public override void shout() {
+            Console.WriteLine("mmmmm");
+        }
+
+        public virtual double speed {
+            get {
+                return 10;
+            }
+        }
+
+        public void swim() {
+            Console.WriteLine($"{this.nickName} is swimming in {this.speed}km/hr...");
+        }
+
+        public Turtle(string nickName) {
+            this.nickName = nickName;
+            Console.WriteLine($"{nickName} born...");
+        }
+    }
+
+    class SmallTurtle : Turtle {
+        public override void shout() {
+            Console.WriteLine(".......");
+        }
+        new public double speed {
+            get {
+                return 5;
+            }
+        }
+        new public void swim() {
+            Console.WriteLine($"{this.nickName} is swimming in {this.speed}km/hr...");
+        }
+        public SmallTurtle(string nickName) : base(nickName) {
+        }
+    }
+
     class Program {
         static void Main(string[] args) {
             var myTurtle = new Turtle(nickName:"Good Turtle");
             var myDock = new Duck(nickName: "Bad Duck");
+            var myLT = new SmallTurtle(nickName:"Little Turtle");
 
-            myDock.swim();
-            myTurtle.swim();
-            myDock.fly();
-            
+            myLT.swim();
+
             var animals = new Animal[3];
             animals[0] = myDock;
             animals[1] = myTurtle;
+            animals[2] = myLT;
             foreach(var animal in animals) {
-                if (animal != null)
+                if (animal != null) {
+                    animal.eat();
                     animal.shout();
+                }
                 var canFly = animal as IFly;
                 if (canFly != null)
                     canFly.fly();

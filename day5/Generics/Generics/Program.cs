@@ -51,6 +51,24 @@ namespace Generics {
         }
     }
 
+    struct ValueData<T> {
+        public T Data { get; }
+        public ValueData(T value) {
+            Data = value;
+        }
+        public void Print() {
+            Console.WriteLine($"--Data:{Data}");
+        }
+    }
+
+    struct SimpleStruct {
+        int a,b;
+        public SimpleStruct(int a ,int b) {
+            this.a = a;
+            this.b = b;
+        }
+    }
+
     class Program {
         static void Main(string[] args) {
             var msInt = new MyStack<int>();
@@ -65,6 +83,13 @@ namespace Generics {
             //var x = msInt.Pop();
             msInt.Print();
             //Console.WriteLine($"{x}");
+
+            var vdString = new ValueData<string>("Happy Birthday");
+            var st = new SimpleStruct(123, 456);
+            var vdStruct = new ValueData<SimpleStruct>(st);
+            vdString.Print();
+            vdStruct.Print();
+
             Console.ReadKey();
         }
     }
