@@ -38,23 +38,37 @@ namespace Inheritance {
             Console.WriteLine("Son!!!!");
         }
     }
+
+
+    class A {
+        public string v = "AAA";
+        public void func() {
+            Console.WriteLine($"{this} : {this.v}");
+        }
+    }
+    class B : A {
+        new public string v = "BBB";
+    }
+
     class Program {
         static void Main(string[] args) {
-            var son = new Son(18);
+            //var son = new Son(18);
+            //var oldSon = new Son();
+            //var parant = (Parant)son;
 
-            var oldSon = new Son();
+            //Console.WriteLine($"son:{son.old}");
+            //Console.WriteLine($"oldSon:{oldSon.old}");
+            //son.parentOld = 40;
+            //Console.WriteLine($"son's parant:{son.parentOld}");
+            //Console.WriteLine($"parant:{parant.old}");
 
-            var parant = (Parant)son;
+            //son.saySomething();
+            //parant.saySomething();
 
-            Console.WriteLine($"son:{son.old}");
-            Console.WriteLine($"oldSon:{oldSon.old}");
-            son.parentOld = 40;
-            Console.WriteLine($"son's parant:{son.parentOld}");
-            Console.WriteLine($"parant:{parant.old}");
-
-
-            son.saySomething();
-            parant.saySomething();
+            A aaa = new A();
+            B bbb = new B();
+            aaa.func();
+            bbb.func();
             Console.ReadKey();
         }
     }
