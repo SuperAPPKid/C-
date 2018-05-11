@@ -17,14 +17,15 @@ namespace LINQ {
     }
     class Program {
         static void Main(string[] args) {
-            //Console.WriteLine(Directory.GetCurrentDirectory());
+            Console.WriteLine(Directory.GetCurrentDirectory());
             var countries = new List<Country>();
             var numbers = new List<int>();
             var group1 = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
             var group2 = new[] { 4, 5, 6, 7, 8, 9, 10, 11, 12 };
-            using (TextReader tr = File.OpenText(@"..\..\countries.txt")) {
+            using (TextReader tr = File.OpenText(@"../../countries.txt")) {
                 string someString;
                 int i = 1;
+
                 while ((someString = tr.ReadLine()) != null) {
                     countries.Add(new Country { Name = someString, Index = i++ });
                 }
