@@ -32,9 +32,19 @@ namespace MultiThread {
 
     }
     class Program {
+		
         static void ShowThreadInfo(string msg) {
             Console.WriteLine("T{0}: {1}",Thread.CurrentThread.ManagedThreadId, msg);
         }
+
+		static void MyBackgroundTask(object param)
+        {
+            for (int i = 0; i < 500; i++)
+            {
+                Console.Write(param);
+            }
+        }
+
         static void Main(string[] args) {
             //var t1 = new Thread(()=> {
             //    for (int i = 0; i < 10; i++) {
@@ -50,9 +60,27 @@ namespace MultiThread {
             //t2.Start();
 
 
-            new SharedStateDemo().Run();
+            //new SharedStateDemo().Run();
+
+			Thread t1 = new Thread(MyBackgroundTask);
+            Thread t2 = new Thread(MyBackgroundTask);
+            Thread t3 = new Thread(MyBackgroundTask);
+
+            t1.Start("X");
+            t2.Start("Y");
+            t3.Start("Z");
+
+            t1.Join();
+            t2.Join();
+            t3.Join();
+
+            for (int i = 0; i < 500; i++)
+            {
+                Console.Write(".");
+            }
 
             Console.ReadKey();
         }
+
     }
 }

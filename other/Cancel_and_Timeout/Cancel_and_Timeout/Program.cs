@@ -7,7 +7,7 @@ namespace Cancel_and_Timeout {
 
             //ThreadPool.QueueUserWorkItem(state => MyTask(CancellationToken.None)); //CancellationToken.None cannot cancel
 
-            using (CancellationTokenSource cts = new CancellationTokenSource(1000)) {
+            using (CancellationTokenSource cts = new CancellationTokenSource(10000)) {
                 Console.WriteLine("按 Enter 鍵可取消背景工作...");
 
                 var cbReg2 = cts.Token.Register(() => Console.WriteLine("背景工作因為逾時而取消!"));
